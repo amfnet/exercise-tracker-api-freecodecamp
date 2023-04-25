@@ -9,8 +9,9 @@ const userModel = UserModelCreator.instance();
 export async function saveExercise(
 	data: Omit<ExerciseInterface, "_id">
 ): Promise<
-	| (Omit<ExerciseInterface, "user"> & {
+	| (Omit<ExerciseInterface, "user" | "date"> & {
 			username: ExerciseInterface["user"];
+			date: string | undefined;
 	  })
 	| null
 > {
@@ -34,7 +35,7 @@ export async function saveExercise(
 			username: res.user.username,
 			description: res.description,
 			duration: res.duration,
-			date: res.date,
+			date: res.date?.toDateString(),
 		};
 	} catch (error) {
 		throw error;

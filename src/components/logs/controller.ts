@@ -4,9 +4,14 @@ import { responseData } from "../../helpers/response";
 
 export const getLogsController = (req: Request, res: Response) => {
 	const { id } = req.params;
-	const { from, to, limit } = req.query;
+	let { from, to, limit }: any = req.query;
 
-	getLogsService(id)
+	if (typeof from == "string") from = new Date(from);
+	if (typeof to == "string") to = new Date(to);
+	if (limit) limit = Number(limit);
+	else limit = null;
+
+	getLogsService(id, from, to, limit)
 		.then((data) => {
 			responseData(res, data, 200);
 		})

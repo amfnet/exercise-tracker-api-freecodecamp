@@ -5,7 +5,7 @@ export function getLogsService(
 	id: string,
 	from: Date | null = null,
 	to: Date | null = null,
-	limit: number | null = 3
+	limit: number | null
 ) {
 	const logModel = new LogModel();
 	return logModel
@@ -45,9 +45,10 @@ function formatDataLogs(data: any, from: Date | null, to: Date | null) {
 		})
 		.filter((e: any) => e != null);
 
+	console.log(data);
 	const log = {
 		_id: first.user._id,
-		count: data.length,
+		count: logs.length,
 		username: first.user.username,
 		log: logs,
 	};
